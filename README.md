@@ -1,0 +1,1 @@
+# fullcycle-4.0-docker-para-desenvolvimento
