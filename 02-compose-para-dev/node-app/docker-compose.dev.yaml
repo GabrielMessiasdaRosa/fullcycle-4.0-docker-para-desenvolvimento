@@ -6,8 +6,6 @@ services:
     extends:
       file: docker-compose.common.yaml
       service: web
-    ports:
-      - 3000:3000
     command: ["npm", "run", "start"]
     depends_on:
       db:
@@ -18,8 +16,6 @@ services:
     extends:
       file: docker-compose.common.yaml
       service: web
-    ports:
-      - 3001:3000
     command: ["npm", "run", "start"]
     depends_on:
       db:
@@ -48,7 +44,7 @@ services:
       timeout: 5s # timeout - quanto tempo esperar antes de considerar o healthcheck falhado
       retries: 5 # retries - número de tentativas antes de considerar o container como falhado
       start_period: 10s # start_period - tempo de espera antes de iniciar o healthcheck
-      #ou seja, o healthcheck será executado a cada 30 segundos, com um timeout de 5 segundos, 5 tentativas e um tempo de espera inicial de 10 segundos
+    # ou seja, o healthcheck será executado a cada 30 segundos, com um timeout de 5 segundos, 5 tentativas e um tempo de espera inicial de 10 segundos
     # depends_on:
     #   - xpto
     # networks:
