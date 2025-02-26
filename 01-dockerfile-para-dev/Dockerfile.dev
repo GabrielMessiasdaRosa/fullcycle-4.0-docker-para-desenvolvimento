@@ -1,0 +1,57 @@
+# Utiliza a imagem base do Node.js na versão 22.8.0 com a variante slim (mais leve)
+# A imagem slim é usada para reduzir o tamanho do contêiner, o que melhora a eficiência e a velocidade de construção e execução.
+FROM node:22.8.0-slim
+
+# Define uma variável de build para a versão do nodemon
+# Variáveis de build permitem a parametrização do Dockerfile, facilitando a atualização de versões de dependências.
+ARG NODEMON_VERSION=3.1.7
+
+# Atualiza a lista de pacotes e instala o curl, em seguida instala o nodemon globalmente
+# apt update: Atualiza a lista de pacotes disponíveis e suas versões.
+# apt install -y curl: Instala o curl.
+# npm install -g nodemon@${NODEMON_VERSION}: Instala o nodemon globalmente na versão especificada pela variável de build.
+RUN apt update && \
+    apt install -y curl && \
+    npm install -g nodemon@${NODEMON_VERSION}
+
+# Como criar um usuário no Debian
+# RUN useradd -m -u 1000 xpto: Cria um usuário chamado 'xpto' com UID 1000 e um diretório home.
+# RUN usermod -u 1000 xpto: Modifica o UID do usuário 'xpto' para 1000.
+
+# RUN useradd -m -u 1000 xpto
+# RUN usermod -u 1000 xpto
+
+# Como criar um usuário no Alpine
+# RUN adduser -D -u 1000 xpto: Cria um usuário chamado 'xpto' com UID 1000 sem senha.
+# RUN sed -i 's/1000/1001/g' /etc/passwd: Substitui o UID 1000 por 1001 no arquivo passwd.
+
+# RUN adduser -D -u 1000 xpto
+# RUN sed -i 's/1000/1001/g' /etc/passwd
+
+# Copia o script start.sh para o diretório raiz do contêiner
+# COPY <origem> <destino>: Copia arquivos ou diretórios do sistema de arquivos do host para o sistema de arquivos do contêiner.
+COPY start.sh /
+
+# Concede permissão de execução ao script start.sh
+# RUN chmod +x <arquivo>: Altera as permissões do arquivo para torná-lo executável.
+RUN chmod +x /start.sh
+
+# Define o usuário padrão para executar os comandos subsequentes como 'node'
+# USER <nome_do_usuário>: Define o usuário que será usado para executar os comandos subsequentes no Dockerfile.
+USER node
+
+# Define o diretório de trabalho dentro do contêiner
+# WORKDIR <caminho>: Define o diretório de trabalho para qualquer comando RUN, CMD, ENTRYPOINT, COPY e ADD subsequente.
+WORKDIR /home/node/app
+
+# Expõe a porta 3000 para permitir o acesso ao serviço rodando no contêiner
+# EXPOSE <porta>: Informa ao Docker que o contêiner escuta na porta especificada em tempo de execução.
+EXPOSE 3000
+
+# Define o comando padrão a ser executado quando o contêiner iniciar
+# CMD ["comando", "argumento1", "argumento2"]: Especifica o comando a ser executado quando um contêiner é iniciado a partir desta imagem.
+CMD ["/start.sh"]
+
+# Define o comando padrão a ser executado quando o contêiner iniciar
+# ENTRYPOINT ["comando"]: É semelhante ao CMD, mas não pode ser substituído quando o contêiner é iniciado com argumentos.
+# ENTRYPOINT [ "executable" ]
