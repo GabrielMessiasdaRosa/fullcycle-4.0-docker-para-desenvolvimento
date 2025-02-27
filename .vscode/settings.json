@@ -1,7 +1,16 @@
 {
-    "workbench.colorCustomizations": {
-        "activityBar.background": "#52153C",
-        "titleBar.activeBackground": "#731E54",
-        "titleBar.activeForeground": "#FEFCFD"
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#52153C",
+    "titleBar.activeBackground": "#731E54",
+    "titleBar.activeForeground": "#FEFCFD"
+  },
+  "terminal.integrated.profiles.linux": {
+    "dev": {
+      "path": "zsh",
+      "args": ["-l"],
+      "env": {
+        "COMPOSE_FILE": "02-compose-para-dev/node-app/docker-compose.dev.yaml"
+      }
     }
+  }
 }

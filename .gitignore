@@ -85,7 +85,6 @@ public/
 .tern-port
 
 # VS Code directories
-.vscode/
 .history/
 
 # MacOS files
